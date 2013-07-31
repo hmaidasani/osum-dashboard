@@ -1,0 +1,33 @@
+/*body {
+	text-align:center;
+	vertical-align:middle;
+}*/
+
+
+
+html, body {
+    background-color: #eee;
+}
+
+body {
+	text-align: center;
+	padding-top: 40px; 
+}
+
+.container {
+	width: 80%;
+}
+
+
+      /* The white background content wrapper */
+.container > .login-form {
+	background-color: #fff;
+	padding: 20px;
+	margin: 0 -20px; 
+	-webkit-border-radius: 10px 10px 10px 10px;
+	   -moz-border-radius: 10px 10px 10px 10px;
+	        border-radius: 10px 10px 10px 10px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+	   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+	        box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
