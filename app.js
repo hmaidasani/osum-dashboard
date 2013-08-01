@@ -1,11 +1,15 @@
 var lazy = require("lazy"),
         fs  = require("fs"),
         http = require("http"),
-        express = require('express');
+        express = require('express'),
+        login = require("./routes/login");
+        dashboard = require("./routes/dashboard");
 
 var app = express();
 var jsonObj = new Object();
 var count = 0;
+
+
 
 
 /* Actual log parser */
@@ -30,16 +34,15 @@ new lazy(fs.createReadStream('log.txt'))
 
 app.configure(function(){
   app.use(express.static(__dirname + '/public'));
+  app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
 });
 
-app.get('/', function(request, response) {
-  response.redirect("/login.html");
-  
-});
+app.get('/', login.login);
 
-app.get('/dashboard', function(request, response) {
-  response.redirect("/dashboard.html");
-});
+
+app.get('/dashboard', dashboard.dashboard);
+
 
 /* Actual handler */
 /*

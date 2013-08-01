@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "express": "3.3.4",
-    "lazy": "1.0.11"
+    "lazy": "1.0.11",
+    "supervisor": "0.5.3"
   },
   "engines": {
     "node": "0.10.x",
