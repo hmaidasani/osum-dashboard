@@ -4,11 +4,12 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <script type='text/javascript' src='http://www.google.com/jsapi'></script>
-    <script type='text/javascript' src='js/dashboard.js'></script>
     <script type='text/javascript' src='js/jquery.js'></script>
     <script type='text/javascript' src='js/jquery.flot.min.js'></script>
     <script type='text/javascript' src='js/jquery.flot.pie.js'></script>
     <script type='text/javascript' src='js/bootstrap.js'></script>
+    <script type='text/javascript' src='js/moment.min.js'></script>
+    <script type='text/javascript' src='js/dashboard.js'></script>
     <script type='text/javascript'>
       google.load('visualization', '1', {'packages':['annotatedtimeline', 'corechart']});
       google.setOnLoadCallback(init);
@@ -162,7 +163,8 @@
                 </div>
               </div>
 
-              <div id='linechart' class='linechart'></div>
+              <!-- <div id='linechart' class='linechart'></div> -->
+              <div id='flotlinechart' class='linechart'></div>
             </div>
           </div>
         </div>

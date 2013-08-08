@@ -45,37 +45,68 @@ function setupGraphs() {
  setInterval('updateGraphs()', update_interval);
 }
 
+
+GRAPH_COLORS = ["#88BBC8", "#ED8662", "#A0ED62", "#ed6262", "#edb762", "#ede262", "#62edb0", "#62beed", "#6279ed", "#c162ed", "#ed62c7", "#9A1B2F"];
+graphProperties = {
+        series: {
+          lines: { stack:false, show: true, fill:true, lineWidth:2, fillColor: { colors: [ { opacity: 0 }, { opacity: 0.15 } ] }, shadowSize:0 },
+          points: { show: true, radius:4, shadowSize:0 },
+          shadowSize:0
+        },
+        grid: { hoverable: true, borderColor: "null", color: "#BDBDBD", borderWidth: 0, minBorderMargin:10, labelMargin: 10},
+        xaxis:{mode: 'time',timeformat: '%b %d',minTickSize: [1, "day"]},
+        // xaxis: { min: 1, max:31, tickDecimals:"number", tickSize:0, tickLength: 0 },
+        // yaxis: { min: 0, minTickSize: 1, tickDecimals:"number", ticks: 3 },
+        legend: { show:false, margin: [-25, -44], noColumns:3, backgroundOpacity:0 },
+        colors: GRAPH_COLORS
+      };
+
+var chartdata = [];//[{"data": [[new Date(new Date().getTime() +  5000), 3.0], [2000, 3.9], [2001, 2.0], [2002, 1.2], [2003, 1.3], [2004, 2.5], [2005, 2.0], [2006, 3.1], [2007, 2.9], [2008, 0.9]], label: "Total Sessions"}];
+
 function initLineChart() {
-  linedata = new google.visualization.DataTable();
-  linedata.addColumn('datetime', 'Time');
-  linedata.addColumn('number', 'FCIs');
-  linedata.addColumn('string', 'Title');
-  linedata.addColumn('string', 'Text');
-  var date = new Date();
+  linedata = [];
+  var date = moment(), month = date.month()+1, year = date.year();
   var i = -15;
-  linedata.addRows([
-    [new Date(date.getTime() + i++ * 5000), 20, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 50, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 250, 'Failed logins', 'High number of users failed to login.'],
-    [new Date(date.getTime() + i++ * 5000), 370, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 30, 'Login issues resolved.', undefined],
-    [new Date(date.getTime() + i++ * 5000), 25, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 40, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 60, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 30, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 80, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 35, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 15, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 20, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 40, undefined, undefined],
-    [new Date(date.getTime() + i++ * 5000), 60, undefined, undefined]
-  ]);
-  linechart = new google.visualization.AnnotatedTimeLine(document.getElementById('linechart'));
-  linechart.draw(linedata, linechart_options);
+
+  for(var i = 7; i > 0; i-- ){
+    linedata.push([(moment().subtract('days', i).unix())*1000, Math.random()*2]);
+    // var newDate = new Date(date.getTime() + i++ * 5000);
+    // linedata.push([monthNames[newDate.getMonth()]+" "+newDate.getDate() + " "+newDate.getMilliseconds(), i*i]);
+  }
+  chartdata.push({"data":linedata});
+
+
+  // var monthTicks = [],
+  //         daysInMonth = getDaysInMonth(year, month);
+
+  //       graphProperties.xaxis.max = null;
+  //       graphProperties.xaxis.min = null;
+        
+  //       for (var i = 0; i < daysInMonth; i++) {
+  //         var monthStart = moment(year + "-" + month).add('days', i),
+  //           monthStartDay = monthStart.date(),
+  //           monthStartMonth = monthStart.format("MMM");
+          
+  //         graphTicks[i+1] = [monthStartDay + " " + monthStartMonth];
+  //       }
+
+  //       for (var i = 2; i < daysInMonth; (i = i + 3)) {     
+  //         var monthStart = moment(year + "-" + month).add('days', i - 1),
+  //           monthStartYear = monthStart.year(),
+  //           monthStartMonth = monthStart.format("MMM"),
+  //           monthStartDay = monthStart.date();
+          
+  //         monthTicks[monthTicks.length] = [i, monthStartDay + " " + monthStartMonth];
+  //       }
+        
+  //       graphProperties.xaxis.ticks = monthTicks;
+  
+
+  $.plot($('#flotlinechart'), chartdata, graphProperties);
 }
 
 function updateGraphs() {
-  getLineData();
+  // getLineData();
   updatePieCharts();
 }
 

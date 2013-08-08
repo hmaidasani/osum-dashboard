@@ -148,12 +148,15 @@ body {
 }
 
 #metrics-panel {
-	width:100%;
+	/*width:100%;*/
 	background-color:#F9F9F9;
 	border-left: 1px solid #e8e9ee;
 	border-right: 1px solid #e8e9ee;
 }
-
+#panel {
+	margin-bottom: 30px;
+	border-bottom: 1px solid #e8e9ee;
+}
 #panel-header{
 	/*width: 100%;*/
 	margin-top: 15px;
