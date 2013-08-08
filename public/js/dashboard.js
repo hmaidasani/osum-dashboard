@@ -186,7 +186,8 @@ function initPieCharts() {
   for(var i = 0; i < num_piecharts; i++) {
 
    $.plot('#pie'+(i+1), piedata, options);
-   $('#pie'+(i+1)+'Title').text(pieTitle + ' ' + (i+1));
+   $('#pie'+(i+1)+'text').append(pieTitle);
+   $('#pie'+(i+1)+'num').append(i+1);
 
    var previousLabel = null, previousChart;
    $(".pie").bind("plothover", function (event, pos, item) {
@@ -261,29 +262,30 @@ function showTooltip(x, y, label, position) {
         switch(position)
         {
         case 0:
-          tooltipTop = y - 25; 
+          tooltipTop = y - 20; 
           toolTipLeft = x + 5;
           break;
         case 1:
           tooltipTop = y + 15; 
-          toolTipLeft = x + 5;
+          toolTipLeft = x + 0;
           break;
         case 2:
-          tooltipTop = y + 25; 
-          toolTipLeft = x - 35;
+          tooltipTop = y + 10; 
+          toolTipLeft = x - 25;
           break;
         case 3:
-          tooltipTop = y - 35; 
-          toolTipLeft = x - 35;
+          tooltipTop = y - 25; 
+          toolTipLeft = x - 30;
           break;
         default:
-          tooltipTop = y + 25; 
+          tooltipTop = y - 20; 
           toolTipLeft = x + 5;
         }
 
         $('<div id="tooltip">' + label + '</div>').css( {
             position: 'absolute',
             display: 'none',
+            'font-size': '10px',
             top: tooltipTop,
             left: toolTipLeft,
             border: '1px solid #fdd',

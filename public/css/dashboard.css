@@ -76,11 +76,11 @@ body {
 .pieHolder {
 	position: relative;
 	display: inline-block;
-	width: 175px;
-	height: 175px;
-	line-height: 100px;
+	width: 100px;
+	height: 100px;
+	line-height: 50px;
 	text-align: center;
-    font-size: 12px;
+    font-size: 8px;
     font-weight: bold;
     color:#FFFFFF;
 }
@@ -93,11 +93,19 @@ body {
 
 .pieHolder > .pieTitle {
 	background: url(../imgs/pie_bg.png) no-repeat;
+	background-size:50px 50px;
 	position: absolute;
-    top: 38px;
-    left: 38px;
+    top: 25px;
+    left: 25px;
     z-index: 1;
-    width: 100px;
+    width: 50px;
+    height: 50px;
+}
+
+.pietext {
+	position: relative;
+	top: 33%;
+	line-height: 10px;
 }
 
 .linechart {
