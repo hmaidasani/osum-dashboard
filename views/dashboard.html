@@ -107,7 +107,7 @@
             </div>
             <div id="metrics-panel">
               <div class="row-fluid no-space" id="graph-panel-container">
-                <div class="span2 graph-panel">
+                <div class="span2 graph-panel" id="fci-panel">
                   <div class="logo">
                     <i class="icon-exclamation-sign icon-2x"></i>
                   </div>
@@ -116,7 +116,7 @@
                     AVG FCI RATE
                   </div>
                 </div>
-                 <div class="span2 graph-panel">
+                 <div class="span2 graph-panel" id="totaluser-panel">
                   <div class="logo">
                     <i class="icon-group icon-2x"></i>
                   </div>
@@ -125,7 +125,7 @@
                     TOTAL USERS
                   </div>
                 </div>
-                 <div class="span2 graph-panel">
+                 <div class="span2 graph-panel" id="newuser-panel">
                   <div class="logo">
                     <i class="icon-user icon-2x"></i>
                   </div>
@@ -134,7 +134,7 @@
                     NEW USERS
                   </div>
                 </div>
-                 <div class="span2 graph-panel">
+                 <!-- <div class="span2 graph-panel">
                   <div class="logo">
                     <i class="icon-time icon-2x"></i>
                   </div>
@@ -142,7 +142,7 @@
                   <div class="graph-title">
                     AVG TIME SPENT
                   </div>
-                </div>
+                </div> -->
                 <!-- <div class="span2 graph-panel">
                   <div class="logo">
                     <i class="icon-bolt icon-2x"></i>
@@ -152,7 +152,7 @@
                     EVENTS LOGGED
                   </div>
                 </div> -->
-                 <div id="addMetric" class="span2 graph-panel">
+                 <div class="span2 graph-panel" id="addmetric-panel">
                   <div class="logo" style="margin-top:8px;">
                     <i class="icon-plus icon-5x"></i>
                   </div>
@@ -162,9 +162,16 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div id='linechart' class='linechart'></div> -->
-              <div id='flotlinechart' class='linechart'></div>
+              <div id="fci-content" class="graph-content">
+                <!-- <div id='linechart' class='linechart'></div> -->
+                <div id='flotlinechart' class='linechart'></div>
+              </div>
+              <div id="totaluser-content" class="graph-content">
+              </div>
+              <div id="newuser-content" class="graph-content">
+              </div>
+              <div id="addmetric-content" class="graph-content">
+              </div>
             </div>
           </div>
         </div>

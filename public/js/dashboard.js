@@ -27,15 +27,23 @@ function setupTriggers() {
   $('#panel-title').text(before + ' - ' + today);
   $('#7daybtn').addClass('active');
 
-  $('.graph-panel').click(function(event) {
-    $('.graph-panel > .graph-title.selected').removeClass('selected');
-    $(this).children('.graph-title').addClass('selected');
-  });
+  $('.graph-content').hide();
+  $('.graph-content:first').show();
 
-  $('#addMetric').click(function(event) {
+  $('.graph-panel').click(panelClick);
+
+  $('#addmetric-panel').click(function(event) {
     $('#myModal').modal('show');
   }); 
 }
+
+function panelClick(event) {
+    $('.graph-panel > .graph-title.selected').removeClass('selected');
+    $(this).children('.graph-title').addClass('selected');
+    $('.graph-content').hide();
+    var metric_selected = $(this).attr('id').replace('-panel', '');
+    $('#'+metric_selected+'-content').show();
+  }
 
 function setupGraphs() {
   initLineChart();
@@ -146,7 +154,8 @@ function getLineData() {
         }
      }
   };
-  xmlhttp.open('GET', 'http://localhost:5000/request', true);
+  xmlhttp.open('GET', '/request', true);
+  // xmlhttp.open('GET', 'http://localhost:5000/request', true);
   xmlhttp.send();
 }
 
@@ -326,8 +335,10 @@ function getRandomColors() {
 }
 
 function addMetric(form) {
-  var addMetricPanel = $('#addMetric');
+  var addMetricPanel = $('#addmetric-panel');
   var newMetric = addMetricPanel.prev().clone();
+  newMetric.attr('id', '-panel')
+  newMetric.click(panelClick);
   newMetric.insertAfter(addMetricPanel.prev());
   addMetricPanel.children('.graph-title').removeClass('selected');
   newMetric.children('.graph-title').addClass('selected');

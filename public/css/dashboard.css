@@ -194,7 +194,8 @@ body {
 	background-image: linear-gradient(to bottom, #EDEDED 0%, #D6D6D6 100%);
 }
 #graph-panel-container{
-	border-radius: 15px;
+	/*border-radius: 15px;*/
+	border-bottom: 1px solid #e8e9ee;
 }
 .graph-panel{
 	padding-top: 10px;
@@ -272,4 +273,9 @@ body {
 #panel-btns > .btn{
 	font-size: 10px;
 	padding: 4px;
+}
+
+.graph-content {
+	height:400px;
+	width:100%;
 }
