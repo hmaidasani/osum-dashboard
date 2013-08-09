@@ -338,7 +338,10 @@ function addMetric(form) {
   var addMetricPanel = $('#addmetric-panel');
   var newMetric = addMetricPanel.prev().clone();
   newMetric.attr('id', '-panel')
-  newMetric.click(panelClick);
+  newMetric.find('.bignum').text('0');
+  newMetric.find('.graph-title').text('NEW METRIC');
+  newMetric.find('i').attr('class', 'icon-circle icon-2x');
+  newMetric.click(panelClick);//add click handler
   newMetric.insertAfter(addMetricPanel.prev());
   addMetricPanel.children('.graph-title').removeClass('selected');
   newMetric.children('.graph-title').addClass('selected');

@@ -2,7 +2,8 @@ var lazy = require("lazy"),
         fs  = require("fs"),
         http = require("http"),
         express = require('express'),
-        login = require("./routes/login");
+        splunkjs = require('splunk-sdk'),
+        login = require("./routes/login"),
         dashboard = require("./routes/dashboard");
 
 var app = express();
