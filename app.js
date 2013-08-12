@@ -5,12 +5,13 @@ var lazy = require("lazy"),
         // splunkjs = require('splunk-sdk'),
         login = require("./routes/login"),
         dashboard = require("./routes/dashboard");
+        // Class = splunkjs.Class,
+        // utils = splunkjs.Utils,
+        // Async = splunkjs.Async;
 
 var app = express();
 var jsonObj = new Object();
 var count = 0;
-
-
 
 
 /* Actual log parser */
@@ -43,6 +44,7 @@ app.get('/', login.login);
 
 
 app.get('/dashboard', dashboard.dashboard);
+app.post('/dashboard', dashboard.dashboard);
 
 
 /* Actual handler */
@@ -51,6 +53,37 @@ app.get('/request', function(request, response) {
   response.send(jsonObj);
 });
 */
+
+// app.get('/splunk', function(request, response) {
+//   // Create a Service instance and log in 
+// var service = new splunkjs.Service({
+//   scheme:"https",
+//   host:"oprdfishd406.corp.intuit.net",
+//   port:"8089",
+//   username:"osumdashboard",
+//   password:"12345678",
+//   version:"default"
+// });
+
+// //var service = new splunkjs.Service({username: "admin", password: "changeme"});
+// service.login(function(err, success) {
+//     if (err || !success) {
+//         console.log('Error: ' + err.toString());
+//         for(var e in err){
+//           console.log(e+" : "+ err[e]);
+//         }
+
+//     }
+
+//     console.log("Login was successful: " + success);
+//     service.jobs().fetch(function(err, jobs) {
+//         var jobList = jobs.list();
+//         for(var i = 0; i < jobList.length; i++) {
+//             console.log("Job " + i + ": " + jobList[i].sid);
+//         }
+//     });
+// });
+// });
 
 app.get('/request', function(request, response) {
   var num = Math.floor((Math.random()*100)+50)

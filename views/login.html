@@ -1,35 +1,36 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="css/login.css">
-		<script type='text/javascript' src='js/bootstrap.js'></script>
-	</head>
+  <head>
+    <title>Sign In</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/jquery.js"></script>
+  </head>
+  <body>
+    <h1 class="title">OSUM Dashboard</h1>
+    <div class="box">
+      <div id="head">
+        <h2 id="signin">Sign In</h2>
+      </div>
+      <div id="body">
+        <form class="form" method="post" action="/dashboard">
+          <input type="text" name="userid" id="userid" placeholder="Username">
+          <input type="password" name="password" id="password" placeholder="Password">
+          <p>
+            <a href="javascript:void(0)">Forgot Username or Password?</a>
+          </p>
+          <input type="submit" id="submit" value="Log In">
+        </form>
+      </div>
+    </div>
 
-	<body>
-		<div class="container">
+  </body>
 
-			<h1>Welcome to OSUM Dashboard</h1>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#userid").val("guest");
+      $("#password").val("guest");
+    });
 
-			<!-- <div class="content"> -->
-				<div class="login text-center">
-					<!-- <div class="span6 offset5"> -->
-						<div class="login-form">
-							<h2>Login</h2>
-							<form action="/dashboard">
-								<fieldset>
-									 <div class="clearfix">
-						                <input type="text" placeholder="Username">
-						              </div>
-						              <div class="clearfix">
-						                <input type="password" placeholder="Password">
-						              </div>
-						              <button class="btn btn-primary" type="submit">Sign in</button>
-								</fieldset>	
-							</form>
-						</div>
-					</div>
-				<!-- </div> -->
-			<!-- </div> -->
-		</div>
-	</body>
+  </script>
+
 </html>
