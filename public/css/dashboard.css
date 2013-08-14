@@ -109,7 +109,7 @@ body {
 }
 
 .linechart {
-	width: 100%;
+	width: 1000px;
 	height: 400px;
 }
 
@@ -265,6 +265,7 @@ body {
 
 #panel-title{
 	float:left;
+	margin-top: 5px;
 }
 
 #panel-btns{

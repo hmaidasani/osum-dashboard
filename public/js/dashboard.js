@@ -31,9 +31,11 @@ function setupTriggers() {
   $('.graph-content:first').show();
 
   $('.graph-panel').click(panelClick);
-
+  $('#peaktransactions-panel').click(function(event) {
+    plotChart('#peaktransactionschart', 1);
+  });
   $('#addmetric-panel').click(function(event) {
-    $('#myModal').modal('show');
+    $('#metricCreateModal').modal('show');
   }); 
 }
 
@@ -62,7 +64,9 @@ graphProperties = {
           shadowSize:0
         },
         grid: { hoverable: true, borderColor: "null", color: "#BDBDBD", borderWidth: 0, minBorderMargin:10, labelMargin: 10},
+        
         xaxis:{mode: 'time',timeformat: '%b %d',minTickSize: [1, "day"]},
+        yaxis:{position: 'left'},
         // xaxis: { min: 1, max:31, tickDecimals:"number", tickSize:0, tickLength: 0 },
         // yaxis: { min: 0, minTickSize: 1, tickDecimals:"number", ticks: 3 },
         legend: { show:false, margin: [-25, -44], noColumns:3, backgroundOpacity:0 },
@@ -71,13 +75,15 @@ graphProperties = {
 
 var chartdata = [];//[{"data": [[new Date(new Date().getTime() +  5000), 3.0], [2000, 3.9], [2001, 2.0], [2002, 1.2], [2003, 1.3], [2004, 2.5], [2005, 2.0], [2006, 3.1], [2007, 2.9], [2008, 0.9]], label: "Total Sessions"}];
 
+var metric_chart_data = [];
+
 function initLineChart() {
   linedata = [];
   var date = moment(), month = date.month()+1, year = date.year();
   var i = -15;
 
   for(var i = 7; i > 0; i-- ){
-    linedata.push([(moment().subtract('days', i).unix())*1000, Math.random()*2]);
+    linedata.push([(moment().subtract('days', i)).valueOf(), Math.random()*2]);
     // var newDate = new Date(date.getTime() + i++ * 5000);
     // linedata.push([monthNames[newDate.getMonth()]+" "+newDate.getDate() + " "+newDate.getMilliseconds(), i*i]);
   }
@@ -109,8 +115,16 @@ function initLineChart() {
         
   //       graphProperties.xaxis.ticks = monthTicks;
   
+  $('#fci-panel .bignum').text(Math.round(parseFloat(linedata[linedata.length-1][1]) * 100) / 100 +'%');
+  console.dir(chartdata);
+  $.plot($('#fcichart'), chartdata, graphProperties);
+  setTooltipTrigger('#fcichart');
+  console.log("chartdata")
+  console.dir(chartdata);
 
-  $.plot($('#flotlinechart'), chartdata, graphProperties);
+  //splunk
+  getLineData();
+  
 }
 
 function updateGraphs() {
@@ -140,24 +154,148 @@ function deleteOldData(data) {
   data.removeRows(0, numRows);
 }
 
+
 function getLineData() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
          var response = xmlhttp.responseText;
          console.log(response);
-         var json = eval('(' + response + ')');
-        if(Math.random() <= 0.85) {
-          updateLineGraph([[new Date(json.time), json.count, undefined, undefined]]);
-        } else {
-          updateLineGraph([[new Date(json.time), json.count, 'Event', 'description']]);
-        }
+         var jsonList = eval('(' + response + ')');
+
+         linedata = [];
+
+         for(var i in jsonList){
+           linedata.push([moment(jsonList[i]["Time"]).subtract('hours', 7).valueOf(), parseInt(jsonList[i]["MaxTPS"])]);
+         }
+         console.dir(linedata);
+         linedata.sort(timeCompare);
+         chartdata = [];
+         chartdata.push({"data":linedata});
+
+         metric_chart_data[1] = chartdata;
+         
+        $('#peaktransactions-panel .bignum').text(Math.round(parseFloat(linedata[linedata.length-1][1]) * 100) / 100);
+          
+  //       chartdata[0].data = [
+  // [
+  //   1362139200000,
+  //   1.56
+  // ],
+  // [
+  //   1362142800000,
+  //   1.0
+  // ],
+  // [
+  //   1362146400000,
+  //   2.0
+  // ],
+  // [
+  //   1362150000000,
+  //   null
+  // ],
+  // [
+  //   1362153600000,
+  //   null
+  // ],
+  // [
+  //   1362157200000,
+  //   null
+  // ]];
+         
      }
   };
-  xmlhttp.open('GET', '/request', true);
+  xmlhttp.open('GET', '/splunk', true);
   // xmlhttp.open('GET', 'http://localhost:5000/request', true);
   xmlhttp.send();
 }
+
+function timeCompare(a,b) {
+  if (a[0] < b[0])
+     return -1;
+  if (a[0] > b[0])
+    return 1;
+  return 0;
+}
+
+function plotChart(container, listIndex) {
+  graphProperties.xaxis={mode: 'time',timeformat: "%H:%M", minTickSize: [1, "hour"], ticks:24, min:(moment("2013-08-13 12:20:47").startOf('day').subtract('hours', 7).valueOf()), max:(moment("2013-08-13 12:20:47").endOf('day').subtract('hours', 7).valueOf())};
+  $.plot($(container), metric_chart_data[listIndex], graphProperties);
+
+  setTooltipTrigger(container);
+}
+
+function setTooltipTrigger(container){
+  $(container).bind("plothover", function (event, pos, item) {
+      $("#x").text(pos.x.toFixed(0));
+      $("#y").text(pos.y.toFixed(0));
+
+      if (item) {
+        if (previousPoint != item.dataIndex) {
+          previousPoint = item.dataIndex;
+          
+          $("#graph-tooltip").remove();
+          var x = item.datapoint[0].toFixed(1).replace(".0", ""),
+            y = item.datapoint[1].toFixed(1).replace(".0", "");
+  
+          showChartTooltip(item.pageX, item.pageY-40, y);
+        }
+      }
+      else {
+        $("#graph-tooltip").remove();
+        previousPoint = null;            
+      }
+    });
+}
+
+function showChartTooltip(x, y, contents) {      
+    var tooltip = '<div id="graph-tooltip">' + contents + '</div>';
+    
+    $("#content").append("<div id='tooltip-calc'>" + tooltip + "</div>");
+    var widthVal= $("#graph-tooltip").outerWidth();
+    $("#tooltip-calc").remove();
+    
+    var newLeft = (x - (widthVal / 2)),
+      xReach = (x + (widthVal / 2));
+      
+    if (xReach > $(window).width()) {
+      newLeft = (x - widthVal);
+    } else if (xReach < 340) {
+      newLeft = x;
+    }
+    
+    $(tooltip).css( {
+      "background-color":"rgba(46,48,46,0.8)",
+      "-webkit-border-radius": "4px",
+      "-moz-border-radius": "4px",
+      "border-radius": "4px",
+      color: "#ffffff",
+      "font-weight": "bold",
+      position: 'absolute',
+      top: y,
+      left: newLeft,
+      padding: "5px"
+    }).appendTo("body").fadeIn(200);
+
+
+
+
+    // $('<div id="tooltip">' + label + '</div>').css( {
+            
+    //         display: 'none',
+    //         'font-size': '10px',
+    //         top: tooltipTop,
+    //         left: toolTipLeft,
+    //         border: '1px solid #fdd',
+    //         padding: '2px',
+    //         'background-color': '#fee',
+    //         opacity: 0.80,
+    //         'z-index': 3
+    //     }).appendTo("body").fadeIn(100);
+  }
+
+
+
 
 piedata = [
     { label: "Database", data: 1, color: { colors: [ "#d3ffaf", "#beff88", "#76ff04", "#84f128", "#9cec57", "#88c257" ] }},
@@ -292,15 +430,29 @@ function showTooltip(x, y, label, position) {
         }
 
         $('<div id="tooltip">' + label + '</div>').css( {
-            position: 'absolute',
-            display: 'none',
-            'font-size': '10px',
-            top: tooltipTop,
-            left: toolTipLeft,
-            border: '1px solid #fdd',
-            padding: '2px',
-            'background-color': '#fee',
-            opacity: 0.80,
+          "background-color":"rgba(46,48,46,0.8)",
+          "-webkit-border-radius": "4px",
+          "-moz-border-radius": "4px",
+          "border-radius": "4px",
+          color: "#ffffff",
+          "font-weight": "bold",
+          'font-size': '10px',
+          position: 'absolute',
+          top: tooltipTop,
+          left: toolTipLeft,
+          padding: "2px",
+
+
+
+            // position: 'absolute',
+            // display: 'none',
+            // 'font-size': '10px',
+            // top: tooltipTop,
+            // left: toolTipLeft,
+            // border: '1px solid #fdd',
+            // padding: '2px',
+            // 'background-color': '#fee',
+            // opacity: 0.80,
             'z-index': 3
         }).appendTo("body").fadeIn(100);
 }

@@ -11,8 +11,10 @@
     <script type='text/javascript' src='js/moment.min.js'></script>
     <script type='text/javascript' src='js/dashboard.js'></script>
     <script type='text/javascript'>
-      google.load('visualization', '1', {'packages':['annotatedtimeline', 'corechart']});
-      google.setOnLoadCallback(init);
+      // google.load('visualization', '1', {'packages':['annotatedtimeline', 'corechart']});
+      // google.setOnLoadCallback(init);
+
+      $().ready(function(){init()});
     </script>
   </head>
 
@@ -116,7 +118,16 @@
                     AVG FCI RATE
                   </div>
                 </div>
-                 <div class="span2 graph-panel" id="totaluser-panel">
+                <div class="span2 graph-panel" id="peaktransactions-panel">
+                  <div class="logo">
+                    <i class="icon-exchange icon-2x"></i>
+                  </div>
+                  <div class="bignum"></div>
+                  <div class="graph-title">
+                    MAX TPS
+                  </div>
+                </div>
+                <div class="span2 graph-panel" id="totaluser-panel">
                   <div class="logo">
                     <i class="icon-group icon-2x"></i>
                   </div>
@@ -125,7 +136,7 @@
                     TOTAL USERS
                   </div>
                 </div>
-                 <div class="span2 graph-panel" id="newuser-panel">
+                <div class="span2 graph-panel" id="newuser-panel">
                   <div class="logo">
                     <i class="icon-user icon-2x"></i>
                   </div>
@@ -162,9 +173,13 @@
                   </div>
                 </div>
               </div>
+               
               <div id="fci-content" class="graph-content">
                 <!-- <div id='linechart' class='linechart'></div> -->
-                <div id='flotlinechart' class='linechart'></div>
+                <div id='fcichart' class='linechart'></div>
+              </div>
+             <div id="peaktransactions-content" class="graph-content">
+                <div id='peaktransactionschart' class='linechart'></div>
               </div>
               <div id="totaluser-content" class="graph-content">
               </div>
@@ -176,43 +191,82 @@
           </div>
         </div>
         <!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Add a new Data Metric and Source</h3>
-  </div>
-  <div class="modal-body">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab1" data-toggle="tab">Real-time Data</a></li>
-      <li><a href="#tab2" data-toggle="tab">Static Data</a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="tab1">
-        <form class="navbar-form pull-left" action="" onsubmit="addMetric(this)" id="addMetricForm">
-        <input type="text" class="input-block-level" placeholder="Metric name" id="metricName">
-        <input type="text" class="input-block-level" placeholder="Source" id>
-        <input type="text" class="input-block-level" placeholder="Priority">
-        <input type="text" class="input-block-level" placeholder="Positivity">
-        <input type="text" class="input-block-level" placeholder="Logo">
-      </form>
-      </div>
-      <div class="tab-pane" id="tab2">
-        <form class="navbar-form pull-left" action="" onsubmit="addMetric(this)" id="addMetricForm">
-        <input type="text" class="input-block-level" placeholder="Metric name" id="metricName">
-        <input type="text" class="input-block-level" placeholder="Static Source" id>
-        <input type="text" class="input-block-level" placeholder="Priority">
-        <input type="text" class="input-block-level" placeholder="Positivity">
-        <input type="text" class="input-block-level" placeholder="Logo">
-      </form>
-      </div>
-    </div>
-    
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary" type="submit" onclick="addMetric('addMetricForm')">Save</button>
-  </div>
-</div>
+        <div id="metricCreateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Add a new Data Metric and Source</h3>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab1" data-toggle="tab">Real-time Data</a></li>
+              <li><a href="#tab2" data-toggle="tab">Static Data</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab1">
+                <form class="navbar-form pull-left" action="" onsubmit="addMetric(this)" id="addMetricForm">
+                  
+                  <h4>General:</h4>
+                  <input type="text" class="input-block-level" placeholder="Metric name" id="metricName" name="metricName">
+                  <input type="text" class="input-block-level" placeholder="Logo" name="logo">
+                  
+                  <h4>Source:</h4>
+                  &nbsp;<input type="radio" name="inOrExt" value="in"> Internal &nbsp;
+                  <input type="radio" name="inOrExt" value="in"> External
+
+                  <h6>Data Type/Source:</h6>
+                  <select class="selectpicker">
+                     <option>Splunk Search</option>
+                     <option>Graphite</option>
+                     <option>==Create New Data Input Definition==</option>
+                  </select>
+                  <input type="checkbox" name="proxyBool" value="true">Need to be connected to a proxy server?<br>
+                  <input type="text" class="input-block-level" placeholder="REST host" name="">
+                  <input type="text" class="input-block-level" placeholder="Priority" name="priority">
+                  <input type="text" class="input-block-level" placeholder="Positivity" name="positivity">
+
+                  <h4>User Credentials</h4>
+                  <input type="text" name="userid" id="userid" placeholder="Username">
+                  <input type="password" name="password" id="password" placeholder="Password">
+                  
+              </form>
+              </div>
+              <div class="tab-pane" id="tab2">
+                <form class="navbar-form pull-left" action="" onsubmit="addMetric(this)" id="addMetricForm">
+                <input type="text" class="input-block-level" placeholder="Metric name" id="metricName">
+                <input type="text" class="input-block-level" placeholder="Static Source" id>
+                <input type="text" class="input-block-level" placeholder="Priority">
+                <input type="text" class="input-block-level" placeholder="Positivity">
+                <input type="text" class="input-block-level" placeholder="Logo">
+              </form>
+              </div>
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary" type="submit" onclick="addMetric('addMetricForm')">Save</button>
+          </div>
+        </div> <!-- /.modal -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="sourceCreateModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Modal title</h4>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
       </div>
     </div>
   </body>
