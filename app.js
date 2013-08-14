@@ -57,10 +57,10 @@ var username='osumdashboard', password='12345678';
 
 app.get('/splunk', function(request, response) {
   
-  var sys = require('sys')
-  var exec = require('child_process').exec;
-  // var child;
-  var parseString = require('xml2js').parseString;
+  // var sys = require('sys')
+  // var exec = require('child_process').exec;
+  // // var child;
+  // var parseString = require('xml2js').parseString;
 
   // Run curl commands to connect to splunk
   // First get sessionKey
