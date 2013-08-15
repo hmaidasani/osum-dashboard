@@ -1,0 +1,4 @@
+Using develop branch: https://github.com/splunk/splunk-sdk-javascript/tree/develop
+Reason for not using master branch: splunk : [Error: SELF_SIGNED_CERT_IN_CHAIN]
+
+Do not use "npm install splunk-sdk" as this would get branch from master
