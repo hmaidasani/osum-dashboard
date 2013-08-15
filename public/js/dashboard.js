@@ -13,6 +13,14 @@ var linechart_options = {
 var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
+
+
+
+
+// var contents = [{'panel_id':'#fci-panel', 'chart_id':,'dataType':}]
+
+
+
 function init() {
   setupTriggers();
   setupGraphs();
@@ -31,6 +39,7 @@ function setupTriggers() {
   $('.graph-content:first').show();
 
   $('.graph-panel').click(panelClick);
+
   $('#peaktransactions-panel').click(function(event) {
     plotChart('#peaktransactionschart', 1);
   });
@@ -40,19 +49,19 @@ function setupTriggers() {
 }
 
 function panelClick(event) {
-    $('.graph-panel > .graph-title.selected').removeClass('selected');
-    $(this).children('.graph-title').addClass('selected');
+    $('.graph-panel.selected').removeClass('selected');
+    $(this).addClass('selected');
     $('.graph-content').hide();
     var metric_selected = $(this).attr('id').replace('-panel', '');
     $('#'+metric_selected+'-content').show();
-  }
+}
 
 function setupGraphs() {
   initLineChart();
   initPieCharts();
   updatePieCharts();
 
- setInterval('updateGraphs()', update_interval);
+  setInterval('updateGraphs()', update_interval);
 }
 
 

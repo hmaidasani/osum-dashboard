@@ -72,7 +72,12 @@ body {
   filter: alpha(opacity=50);*/
   outline: none;
 }
-
+.sectionTitle{
+	padding: 10px;
+	background-color: #444444;
+	color: #ffffff;
+	font-size: 16px;
+}
 .pieHolder {
 	position: relative;
 	display: inline-block;
@@ -83,6 +88,7 @@ body {
     font-size: 8px;
     font-weight: bold;
     color:#FFFFFF;
+    /*margin-top: 5px;*/
 }
 
 .pieHolder > .pie {
@@ -123,6 +129,8 @@ body {
 	height: 300px;*/
 	overflow:auto;
 	white-space: nowrap;
+	background-color: #F0F0F0;
+	border: 1px solid #e8e9ee;
 }
 #body_container{
 	position:relative;
@@ -151,62 +159,52 @@ body {
 
 .bignum{
 	font: 30px;
-	color: #666;
+	/*color: #666;*/
 	text-align: center;
 }
 
 #metrics-panel {
 	/*width:100%;*/
-	background-color:#F9F9F9;
+	background-color:#ffffff;
 	border-left: 1px solid #e8e9ee;
 	border-right: 1px solid #e8e9ee;
 }
 #panel {
+	margin-top: 25px;
 	margin-bottom: 30px;
 	border-bottom: 1px solid #e8e9ee;
 }
 #panel-header{
 	/*width: 100%;*/
-	margin-top: 15px;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	background-color: #f0f0f0;
-	text-shadow:0 2px #FFF;
+	/*margin-top: 15px;*/
+	background-color: #444444;
 	height: 30px;
+	color:#ffffff;
 	padding:10px 10px 10px 10px;
-	font-size: 18px;
-		/* IE10 Consumer Preview */ 
-	background-image: -ms-linear-gradient(top, #EDEDED 0%, #D6D6D6 100%);
-
-	/* Mozilla Firefox */ 
-	background-image: -moz-linear-gradient(top, #EDEDED 0%, #D6D6D6 100%);
-
-	/* Opera */ 
-	background-image: -o-linear-gradient(top, #EDEDED 0%, #D6D6D6 100%);
-
-	/* Webkit (Safari/Chrome 10) */ 
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #EDEDED), color-stop(1, #D6D6D6));
-
-	/* Webkit (Chrome 11+) */ 
-	background-image: -webkit-linear-gradient(top, #EDEDED 0%, #D6D6D6 100%);
-
-	/* W3C Markup, IE10 Release Preview */ 
-	background-image: linear-gradient(to bottom, #EDEDED 0%, #D6D6D6 100%);
+	font-size: 16px;	
 }
+
 #graph-panel-container{
 	/*border-radius: 15px;*/
-	border-bottom: 1px solid #e8e9ee;
+	/*border-bottom: 1px solid #e8e9ee;*/
+	background-color:#aeaeae;
 }
 .graph-panel{
 	padding-top: 10px;
-	background-color:#F9F9F9;
-	border-right: 1px solid #e8e9ee;
+	background-color:#aeaeae;
+	/*border-right: 1px solid #aeaeae;*/
 	bottom: 0;
 	height: 175px;
 	position: relative;
 	cursor: pointer;
+	color: #666;
 }
 
+.graph-panel.selected{
+	color:#000000;
+	background-color:#ffffff;
+	
+}
 .graph-panel .sparkChartHolder{
 	margin-top: 20px;
 	margin-left: 20%;
@@ -215,56 +213,20 @@ body {
 
 }
 
-.graph-panel:hover > .graph-title, .graph-panel > .graph-title:hover{
-	/* IE10 Consumer Preview */ 
-	background-image: -ms-linear-gradient(top, #EDEDED 0%, #EDEDED 100%);
-
-	/* Mozilla Firefox */ 
-	background-image: -moz-linear-gradient(top, #EDEDED 0%, #EDEDED 100%);
-
-	/* Opera */ 
-	background-image: -o-linear-gradient(top, #EDEDED 0%, #EDEDED 100%);
-
-	/* Webkit (Safari/Chrome 10) */ 
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #EDEDED), color-stop(1, #EDEDED));
-
-	/* Webkit (Chrome 11+) */ 
-	background-image: -webkit-linear-gradient(top, #EDEDED 0%, #EDEDED 100%);
-
-	/* W3C Markup, IE10 Release Preview */ 
-	background-image: linear-gradient(to bottom, #EDEDED 0%, #EDEDED 100%);
-}
-
-.graph-panel > .graph-title.selected {
-	background-image: linear-gradient(to bottom, #484848 20%, #2B2B2B 100%);
-	color: #ffffff;
-	text-shadow:none;
+.graph-panel:hover{
+	color:#000000;
+	background:#ffffff;
 }
 
 .graph-title{
-	/* IE10 Consumer Preview */ 
-	background-image: -ms-linear-gradient(top, #EDEDED 0%, #D6D6D6 100%);
-
-	/* Mozilla Firefox */ 
-	background-image: -moz-linear-gradient(top, #EDEDED 0%, #D6D6D6 100%);
-
-	/* Opera */ 
-	background-image: -o-linear-gradient(top, #EDEDED 0%, #D6D6D6 100%);
-
-	/* Webkit (Safari/Chrome 10) */ 
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #EDEDED), color-stop(1, #D6D6D6));
-
-	/* Webkit (Chrome 11+) */ 
-	background-image: -webkit-linear-gradient(top, #EDEDED 0%, #D6D6D6 100%);
-
-	/* W3C Markup, IE10 Release Preview */ 
-	background-image: linear-gradient(to bottom, #EDEDED 0%, #D6D6D6 100%);
 	font:Ubuntu 13px;
-	text-shadow:0 2px #FFF;
 	text-align: center;
 	position: absolute;
 	bottom: 0;
-	width: 100%
+	width: 100%;
+	height: 30px;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .graph-panel > .bignum {
