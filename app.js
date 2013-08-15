@@ -2,9 +2,9 @@ var lazy = require("lazy"),
         fs  = require("fs"),
         http = require("http"),
         express = require('express'),
-        // splunkjs = require('./splunk-sdk-javascript/index'),
         login = require("./routes/login"),
         dashboard = require("./routes/dashboard");
+        // splunkjs = require('./splunk-sdk-javascript/index'),
         // Class = splunkjs.Class,
         // utils = splunkjs.Utils,
         // Async = splunkjs.Async;
@@ -64,7 +64,8 @@ app.get('/splunk', function(request, response) {
 
   // Run curl commands to connect to splunk
   // First get sessionKey
-  /*exec("curl -k https://oprdfishd406.corp.intuit.net:8089/services/auth/login -d username="+username+" -d password="+password, function (error, stdout, stderr) {
+  /*
+  exec("curl -k https://oprdfishd406.corp.intuit.net:8089/services/auth/login -d username="+username+" -d password="+password, function (error, stdout, stderr) {
     if (error !== null) {
       console.log('exec error: ' + error);
     }
@@ -117,24 +118,25 @@ app.get('/splunk', function(request, response) {
     });
   });
 */
+
 var result = [
   {
-    "MaxTPS": "227",
+    "MaxTPS": "263",
     "_span": "1",
     "Time": "2013-08-13 11:21:53"
   },
   {
-    "MaxTPS": "220",
+    "MaxTPS": "230",
     "_span": "1",
     "Time": "2013-08-13 13:29:18"
   },
   {
-    "MaxTPS": "212",
+    "MaxTPS": "120",
     "_span": "1",
     "Time": "2013-08-13 12:39:47"
   },
   {
-    "MaxTPS": "211",
+    "MaxTPS": "215",
     "_span": "1",
     "Time": "2013-08-13 13:11:04"
   },
@@ -154,17 +156,17 @@ var result = [
     "Time": "2013-08-13 13:26:22"
   },
   {
-    "MaxTPS": "203",
+    "MaxTPS": "194",
     "_span": "1",
     "Time": "2013-08-13 11:30:45"
   },
   {
-    "MaxTPS": "203",
+    "MaxTPS": "172",
     "_span": "1",
     "Time": "2013-08-13 12:04:14"
   },
   {
-    "MaxTPS": "203",
+    "MaxTPS": "152",
     "_span": "1",
     "Time": "2013-08-13 12:20:47"
   }

@@ -59,6 +59,10 @@ function setupGraphs() {
 GRAPH_COLORS = ["#88BBC8", "#ED8662", "#A0ED62", "#ed6262", "#edb762", "#ede262", "#62edb0", "#62beed", "#6279ed", "#c162ed", "#ed62c7", "#9A1B2F"];
 graphProperties = {
         series: {
+        //   bars: {
+        //     show: true,
+        //     barWidth: 0.1
+        // },
           lines: { stack:false, show: true, fill:true, lineWidth:2, fillColor: { colors: [ { opacity: 0 }, { opacity: 0.15 } ] }, shadowSize:0 },
           points: { show: true, radius:4, shadowSize:0 },
           shadowSize:0
@@ -88,39 +92,21 @@ function initLineChart() {
     // linedata.push([monthNames[newDate.getMonth()]+" "+newDate.getDate() + " "+newDate.getMilliseconds(), i*i]);
   }
   chartdata.push({"data":linedata});
-
-
-  // var monthTicks = [],
-  //         daysInMonth = getDaysInMonth(year, month);
-
-  //       graphProperties.xaxis.max = null;
-  //       graphProperties.xaxis.min = null;
-        
-  //       for (var i = 0; i < daysInMonth; i++) {
-  //         var monthStart = moment(year + "-" + month).add('days', i),
-  //           monthStartDay = monthStart.date(),
-  //           monthStartMonth = monthStart.format("MMM");
-          
-  //         graphTicks[i+1] = [monthStartDay + " " + monthStartMonth];
-  //       }
-
-  //       for (var i = 2; i < daysInMonth; (i = i + 3)) {     
-  //         var monthStart = moment(year + "-" + month).add('days', i - 1),
-  //           monthStartYear = monthStart.year(),
-  //           monthStartMonth = monthStart.format("MMM"),
-  //           monthStartDay = monthStart.date();
-          
-  //         monthTicks[monthTicks.length] = [i, monthStartDay + " " + monthStartMonth];
-  //       }
-        
-  //       graphProperties.xaxis.ticks = monthTicks;
   
   $('#fci-panel .bignum').text(Math.round(parseFloat(linedata[linedata.length-1][1]) * 100) / 100 +'%');
-  console.dir(chartdata);
+  var sparklist = [];
+  for(var dataIndex = 0; dataIndex < linedata.length; dataIndex++){
+    sparklist.push(linedata[dataIndex][1]);
+  }
+  var listText = sparklist.join(',');
+  $("#fci-panel .inlinesparkline").text(listText);
+  $("#fci-panel .inlinesparkline").peity("bar", { width: "100%", height:"30", colours: ["#88bbc8"] });
+
   $.plot($('#fcichart'), chartdata, graphProperties);
   setTooltipTrigger('#fcichart');
-  console.log("chartdata")
-  console.dir(chartdata);
+
+
+ 
 
   //splunk
   getLineData();
@@ -154,7 +140,7 @@ function deleteOldData(data) {
   data.removeRows(0, numRows);
 }
 
-
+//splunk request
 function getLineData() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
@@ -176,33 +162,14 @@ function getLineData() {
          metric_chart_data[1] = chartdata;
          
         $('#peaktransactions-panel .bignum').text(Math.round(parseFloat(linedata[linedata.length-1][1]) * 100) / 100);
-          
-  //       chartdata[0].data = [
-  // [
-  //   1362139200000,
-  //   1.56
-  // ],
-  // [
-  //   1362142800000,
-  //   1.0
-  // ],
-  // [
-  //   1362146400000,
-  //   2.0
-  // ],
-  // [
-  //   1362150000000,
-  //   null
-  // ],
-  // [
-  //   1362153600000,
-  //   null
-  // ],
-  // [
-  //   1362157200000,
-  //   null
-  // ]];
-         
+        var sparklist = [];
+        for(var dataIndex = 0; dataIndex < linedata.length; dataIndex++){
+          sparklist.push(linedata[dataIndex][1]);
+        }
+        var listText = sparklist.join(',');
+        $("#peaktransactions-panel .inlinesparkline").text(listText);
+        $("#peaktransactions-panel .inlinesparkline").peity("bar", { width: "100%", height:"30", colours: ["#88bbc8"]});
+                  
      }
   };
   xmlhttp.open('GET', '/splunk', true);
@@ -220,6 +187,7 @@ function timeCompare(a,b) {
 
 function plotChart(container, listIndex) {
   graphProperties.xaxis={mode: 'time',timeformat: "%H:%M", minTickSize: [1, "hour"], ticks:24, min:(moment("2013-08-13 12:20:47").startOf('day').subtract('hours', 7).valueOf()), max:(moment("2013-08-13 12:20:47").endOf('day').subtract('hours', 7).valueOf())};
+  // graphProperties.xaxis={mode: 'time',timeformat: "%H:%M", minTickSize: [1, "hour"], ticks:24, min:(moment().startOf('day').subtract('hours', 7).valueOf()), max:(moment().endOf('day').subtract('hours', 7).valueOf())};
   $.plot($(container), metric_chart_data[listIndex], graphProperties);
 
   setTooltipTrigger(container);

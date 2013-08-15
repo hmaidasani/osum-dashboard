@@ -9,6 +9,8 @@
     <script type='text/javascript' src='js/jquery.flot.pie.js'></script>
     <script type='text/javascript' src='js/bootstrap.js'></script>
     <script type='text/javascript' src='js/moment.min.js'></script>
+    <script type='text/javascript' src='js/jquery.sparkline.min.js'></script>
+    <script type='text/javascript' src='js/jquery.peity.min.js'></script>
     <script type='text/javascript' src='js/dashboard.js'></script>
     <script type='text/javascript'>
       // google.load('visualization', '1', {'packages':['annotatedtimeline', 'corechart']});
@@ -114,6 +116,9 @@
                     <i class="icon-exclamation-sign icon-2x"></i>
                   </div>
                   <div class="bignum">2%</div>
+                  <div class="sparkChartHolder">
+                    <span class="inlinesparkline"></span>
+                  </div>
                   <div class="graph-title selected">
                     AVG FCI RATE
                   </div>
@@ -123,6 +128,9 @@
                     <i class="icon-exchange icon-2x"></i>
                   </div>
                   <div class="bignum"></div>
+                  <div class="sparkChartHolder">
+                    <span class="inlinesparkline"></span>
+                  </div>
                   <div class="graph-title">
                     MAX TPS
                   </div>
@@ -132,6 +140,9 @@
                     <i class="icon-group icon-2x"></i>
                   </div>
                   <div class="bignum">22.3K</div>
+                  <div class="sparkChartHolder">
+                    <span class="inlinesparkline"></span>
+                  </div>
                   <div class="graph-title">
                     TOTAL USERS
                   </div>
@@ -141,33 +152,21 @@
                     <i class="icon-user icon-2x"></i>
                   </div>
                   <div class="bignum">2.7K</div>
+                  <div class="sparkChartHolder">
+                    <span class="inlinesparkline"></span>
+                  </div>
                   <div class="graph-title">
                     NEW USERS
                   </div>
                 </div>
-                 <!-- <div class="span2 graph-panel">
-                  <div class="logo">
-                    <i class="icon-time icon-2x"></i>
-                  </div>
-                  <div class="bignum">3.7 MIN</div>
-                  <div class="graph-title">
-                    AVG TIME SPENT
-                  </div>
-                </div> -->
-                <!-- <div class="span2 graph-panel">
-                  <div class="logo">
-                    <i class="icon-bolt icon-2x"></i>
-                  </div>
-                  <div class="bignum">83K</div>
-                  <div class="graph-title">
-                    EVENTS LOGGED
-                  </div>
-                </div> -->
                  <div class="span2 graph-panel" id="addmetric-panel">
-                  <div class="logo" style="margin-top:8px;">
+                  <div class="logo" style="margin-top:30px;">
                     <i class="icon-plus icon-5x"></i>
                   </div>
                   <div class="bignum"></div>
+                  <div class="sparkChartHolder">
+                    <span class="inlinesparkline"></span>
+                  </div>
                   <div class="graph-title">
                    ADD METRIC
                   </div>
@@ -175,7 +174,6 @@
               </div>
                
               <div id="fci-content" class="graph-content">
-                <!-- <div id='linechart' class='linechart'></div> -->
                 <div id='fcichart' class='linechart'></div>
               </div>
              <div id="peaktransactions-content" class="graph-content">

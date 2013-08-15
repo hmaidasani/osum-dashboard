@@ -202,10 +202,19 @@ body {
 	background-color:#F9F9F9;
 	border-right: 1px solid #e8e9ee;
 	bottom: 0;
-	height: 120px;
+	height: 175px;
 	position: relative;
 	cursor: pointer;
 }
+
+.graph-panel .sparkChartHolder{
+	margin-top: 20px;
+	margin-left: 20%;
+	text-align:center;
+	width:100px;
+
+}
+
 .graph-panel:hover > .graph-title, .graph-panel > .graph-title:hover{
 	/* IE10 Consumer Preview */ 
 	background-image: -ms-linear-gradient(top, #EDEDED 0%, #EDEDED 100%);
