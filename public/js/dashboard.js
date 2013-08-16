@@ -477,5 +477,5 @@ function addMetric(form) {
   newMetric.insertAfter(addMetricPanel.prev());
   addMetricPanel.children('.graph-title').removeClass('selected');
   newMetric.children('.graph-title').addClass('selected');
-  $('#myModal').modal('hide');
+  $('#metricCreateModal').modal('hide');
 }
