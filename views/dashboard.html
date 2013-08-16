@@ -8,13 +8,13 @@
 
   <body>
     <header>
-      <div class="navbar navbar-inverse">  
+      <div id="navbar" class="navbar navbar-inverse">  
         <div class="navbar-inner">  
           <div id="nav_container" class="container"> 
-
-            <a class="brand" href="#" title="Operations System Utility Monitoring Dashboard">OSUM Dashboard</a>
-
-            <ul class="nav">
+            <span id="logo">
+            <a  class="brand" href="#" title="Operations System Utility Monitoring">OSUM</a>
+          </span>
+            <ul id="subnavigation" class="nav">
               <li><a href="#">Engineering</a> </li>
               <li><a href="#">Operations</a> </li>
               <li><a href="#">Business</a> </li>
@@ -30,10 +30,10 @@
         <div id="sidebar" class="span2">
           <div id="innersidebar">
             <ul>
-              <li><a href="#">Charts</a></li>
-              <li><a href="#">Users</a></li>
-              <li><a href="#">Management</a></li>
-              <li><a href="#">Events</a></li>
+              <li class="selected"><span>Analytics</span></li>
+              <li><span>Alerts</span></li>
+              <li><span>Users</span></li>
+              <li><span>Management</span></li>
             </ul>
           </div>
         </div>
@@ -182,14 +182,14 @@
             </div>
           </div>
           
-         <!--  <p>
+          <!-- <p>
             xxxxxxxxxxxxxxxx
           </p>
 
           <p>
             xxxxxxxxxxxxxxxx
           </p>
-          
+
           <p>
             xxxxxxxxxxxxxxxx
           </p> -->

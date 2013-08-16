@@ -51,6 +51,8 @@ function setupTriggers() {
 function panelClick(event) {
     $('.graph-panel.selected').removeClass('selected');
     $(this).addClass('selected');
+    $(".graph-panel .inlinesparkline").peity("bar", { width: "100%", height:"30", colours: ["#666"]});
+    $(".graph-panel.selected .inlinesparkline").peity("bar", { width: "100%", height:"30", colours: ["#88bbc8"]});
     $('.graph-content').hide();
     var metric_selected = $(this).attr('id').replace('-panel', '');
     $('#'+metric_selected+'-content').show();
@@ -109,6 +111,7 @@ function initLineChart() {
   }
   var listText = sparklist.join(',');
   $("#fci-panel .inlinesparkline").text(listText);
+  
   $("#fci-panel .inlinesparkline").peity("bar", { width: "100%", height:"30", colours: ["#88bbc8"] });
 
   $.plot($('#fcichart'), chartdata, graphProperties);
@@ -177,7 +180,7 @@ function getLineData() {
         }
         var listText = sparklist.join(',');
         $("#peaktransactions-panel .inlinesparkline").text(listText);
-        $("#peaktransactions-panel .inlinesparkline").peity("bar", { width: "100%", height:"30", colours: ["#88bbc8"]});
+        $("#peaktransactions-panel .inlinesparkline").peity("bar", { width: "100%", height:"30", colours: ["#666"]});
                   
      }
   };
